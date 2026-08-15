@@ -282,6 +282,7 @@
             border-radius: 30px;
             padding: 40px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .hero-top {
@@ -371,11 +372,10 @@
             flex-shrink: 0;
         }
 
-        /* Mega Cards Container (2 Pilihan Baru yang Megah) */
+        /* Skill Card Container (Single Chill Lofi Card) */
         .skills-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            display: flex;
+            justify-content: flex-start;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding-top: 25px;
         }
@@ -385,9 +385,14 @@
             border: 1px solid rgba(236, 72, 153, 0.2);
             padding: 20px;
             border-radius: 20px;
-            text-align: center;
+            text-align: left;
             backdrop-filter: blur(10px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .skill-card:hover {
@@ -397,22 +402,33 @@
         }
 
         .skill-card i {
-            font-size: 1.8rem;
+            font-size: 2rem;
             background: linear-gradient(135deg, #c084fc, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
-        .skill-card h4 {
-            font-size: 1.1rem;
+        .skill-info h4 {
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
         }
 
-        .skill-card p {
-            font-size: 0.85rem;
+        .skill-info p {
+            font-size: 0.8rem;
             color: #d1d5db;
+        }
+
+        /* Watermark Pojok Bawah Hero Card */
+        .hero-watermark {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-size: 0.75rem;
+            color: rgba(209, 213, 219, 0.4);
+            letter-spacing: 0.5px;
+            pointer-events: none;
         }
 
         /* Links Section (Grid Layout) */
@@ -499,8 +515,14 @@
             .hero-text h1 {
                 font-size: 2.2rem;
             }
-            .links-grid, .skills-container {
+            .links-grid {
                 grid-template-columns: 1fr;
+            }
+            .skills-container {
+                justify-content: center;
+            }
+            .skill-card {
+                max-width: 100%;
             }
             header {
                 flex-direction: column;
@@ -561,7 +583,7 @@
                 <div class="hero-section">
                     <div class="hero-top">
                         <div class="hero-text">
-                            <!-- Tagline dengan Confetti & Popup Mejeh Euyy (Cooldown 10 Detik) -->
+                            <!-- Tagline dengan Confetti & Popup Mejeh Euyy (Cooldown 10 Detik) tanpa teks click me -->
                             <div class="tagline-box" onclick="triggerMejehEffect(event)">"Mejeh euyy" 🔥</div>
                             <h1>Hello, I'm <span>Yanz</span></h1>
                             <p>Welcome to my official landing page. Explore all my social media accounts, game profiles, and online spaces right here in one place!</p>
@@ -573,19 +595,19 @@
                         <div class="hero-avatar">Y</div>
                     </div>
 
-                    <!-- Mega Cards (Chill Lofi & Vibe Creator) -->
+                    <!-- Single Chill Lofi Card -->
                     <div class="skills-container">
                         <div class="skill-card">
                             <i class="fa-solid fa-headphones-simple"></i>
-                            <h4>Chill & Lofi Vibes</h4>
-                            <p>Enjoying good music and relaxing gaming moments.</p>
-                        </div>
-                        <div class="skill-card">
-                            <i class="fa-solid fa-crown"></i>
-                            <h4>Zerry Syndicate Vibe</h4>
-                            <p>Creating awesome spaces, communities, and digital style.</p>
+                            <div class="skill-info">
+                                <h4>Chill & Lofi Vibes</h4>
+                                <p>Relaxing gaming moments.</p>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Watermark Pojok Bawah -->
+                    <div class="hero-watermark">Dibuat oleh Zerry [SortaMenfy]</div>
                 </div>
             </div>
 
