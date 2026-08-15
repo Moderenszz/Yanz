@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yanz - Profile</title>
-    <!-- Google Fonts & FontAwesome for Icons -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
@@ -31,7 +30,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Intro Overlay (Auto masuk tanpa klik) */
+        /* Intro Overlay */
         #intro-overlay {
             position: fixed;
             top: 0;
@@ -88,39 +87,53 @@
             z-index: 998;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* Full Layout Wrapper */
+        .wrapper {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
             justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
             position: relative;
             z-index: 2;
         }
 
-        /* Navigation Header */
+        /* Header / Navbar */
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         nav {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 50px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
         }
 
         nav button {
             background: transparent;
             border: none;
             color: #d1d5db;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            padding: 8px 20px;
+            padding: 8px 22px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -132,11 +145,21 @@
             box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
         }
 
+        /* Main Content Container (Full Width Optimized) */
+        .main-content {
+            width: 100%;
+            max-width: 900px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
         /* Pages */
         .page {
             display: none;
             width: 100%;
-            text-align: center;
             animation: fadeIn 0.5s ease forwards;
         }
 
@@ -149,49 +172,54 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Profile Card */
-        .profile-card {
+        /* Home Section */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
-            border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            gap: 40px;
         }
 
-        .avatar-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
+        .hero-text {
+            flex: 1;
         }
 
-        /* PP Huruf Y */
-        .avatar-letter {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #9333ea, #ec4899);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
+        .hero-text h1 {
+            font-size: 3rem;
             font-weight: 700;
-            color: #ffffff;
-            border: 3px solid #f472b6;
-            box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);
+            margin-bottom: 10px;
+            line-height: 1.2;
         }
 
-        .profile-card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            font-weight: 700;
+        .hero-text h1 span {
+            background: linear-gradient(135deg, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .profile-card p {
+        .hero-text p {
             color: #d1d5db;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tagline-box {
+            display: inline-block;
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            color: #f472b6;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
             font-size: 0.95rem;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .status-badge {
@@ -221,155 +249,214 @@
             50% { opacity: 0.3; }
         }
 
-        /* Links List */
-        .links-container {
+        /* Avatar Huruf Y Besar di Home */
+        .hero-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9333ea, #ec4899);
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            font-weight: 700;
+            color: #ffffff;
+            border: 4px solid #f472b6;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+            flex-shrink: 0;
+        }
+
+        /* Links Section (Grid Layout) */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             width: 100%;
         }
 
-        .link-item {
+        .link-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 16px 20px;
-            border-radius: 16px;
+            padding: 20px 25px;
+            border-radius: 20px;
             color: #ffffff;
             text-decoration: none;
-            font-weight: 500;
+            backdrop-filter: blur(12px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
         }
 
-        .link-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
-        .link-info {
+        .link-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
         }
 
-        .link-info i {
-            font-size: 1.4rem;
-            width: 25px;
-            text-align: center;
+        /* Icon Gambar Asli (Logo PNG) */
+        .platform-icon {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
-        .fa-tiktok { color: #fe2c55; }
-        .fa-instagram { color: #e1306c; }
-        .fa-gamepad { color: #ef4444; }
-        .fa-discord { color: #5865F2; }
-
-        .link-item span {
-            font-size: 0.95rem;
+        .link-info h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 2px;
         }
 
-        .link-item .fa-arrow-right {
+        .link-info p {
             font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .link-card i {
             color: #9ca3af;
             transition: transform 0.3s ease;
         }
 
-        .link-item:hover .fa-arrow-right {
-            transform: translateX(4px);
+        .link-card:hover i {
+            transform: translateX(5px);
             color: #ffffff;
         }
 
         /* Footer */
         footer {
-            margin-top: 40px;
+            width: 100%;
             text-align: center;
             color: #9ca3af;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            max-width: 1200px;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .wrapper {
+                padding: 20px;
+            }
+            .hero-section {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Intro Overlay (Auto Masuk) -->
+    <!-- Intro Overlay -->
     <div id="intro-overlay">
         <div class="intro-content">
             <h1>YANZ</h1>
-            <p>LOADING PROFILE...</p>
+            <p>LOADING WEBSITE...</p>
         </div>
     </div>
 
-    <!-- Canvas untuk Efek Partikel -->
+    <!-- Canvas Partikel -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Audio Efek Shiny (Sintesis Suara via Web Audio API) -->
-
     <!-- Main Wrapper -->
-    <div class="container" id="main-container">
+    <div class="wrapper">
         
-        <!-- Navigation Menu -->
-        <nav>
-            <button class="tab-btn active" onclick="switchPage('home', event)">Home</button>
-            <button class="tab-btn" onclick="switchPage('links', event)">Links</button>
-        </nav>
+        <!-- Header -->
+        <header>
+            <div class="logo-text">Yanz.</div>
+            <nav>
+                <button class="tab-btn active" onclick="switchPage('home', event)">Home</button>
+                <button class="tab-btn" onclick="switchPage('links', event)">Links</button>
+            </nav>
+        </header>
 
-        <!-- Content Area -->
-        <div style="width: 100%;">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            
             <!-- Home Page -->
             <div id="home" class="page active">
-                <div class="profile-card">
-                    <div class="avatar-container">
-                        <!-- PP Huruf Y -->
-                        <div class="avatar-letter">Y</div>
+                <div class="hero-section">
+                    <div class="hero-text">
+                        <div class="tagline-box">"Mejeh euyy" 🔥</div>
+                        <h1>Hello, I'm <span>Yanz</span></h1>
+                        <p>Welcome to my official landing page. Explore all my social media accounts, game profiles, and online spaces right here in one place!</p>
+                        <div class="status-badge">
+                            <div class="status-dot"></div>
+                            Available & Ready
+                        </div>
                     </div>
-                    <h2>Yanz</h2>
-                    <p>Welcome to my personal space. Check out my links and social accounts below!</p>
-                    <div class="status-badge">
-                        <div class="status-dot"></div>
-                        Ready to Connect
-                    </div>
+                    <div class="hero-avatar">Y</div>
                 </div>
             </div>
 
             <!-- Links Page -->
             <div id="links" class="page">
-                <div class="links-container">
-                    <a href="https://www.tiktok.com/@yanzaja114" target="_blank" class="link-item">
-                        <div class="link-info">
-                            <i class="fa-brands fa-tiktok"></i>
-                            <span>TikTok (@yanzaja114)</span>
+                <div class="links-grid">
+                    
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@yanzaja114" target="_blank" class="link-card">
+                        <div class="link-left">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tiktok/tiktok-original.svg" alt="TikTok" class="platform-icon" onerror="this.src='https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg'">
+                            <div class="link-info">
+                                <h3>TikTok</h3>
+                                <p>@yanzaja114</p>
+                            </div>
                         </div>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
 
-                    <a href="https://www.instagram.com/yanzaja114/" target="_blank" class="link-item">
-                        <div class="link-info">
-                            <i class="fa-brands fa-instagram"></i>
-                            <span>Instagram (@yanzaja114)</span>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/yanzaja114/" target="_blank" class="link-card">
+                        <div class="link-left">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="platform-icon">
+                            <div class="link-info">
+                                <h3>Instagram</h3>
+                                <p>@yanzaja114</p>
+                            </div>
                         </div>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
 
-                    <a href="https://www.roblox.com" target="_blank" class="link-item">
-                        <div class="link-info">
-                            <i class="fa-solid fa-gamepad"></i>
-                            <span>Roblox (yanzxa4)</span>
+                    <!-- Roblox -->
+                    <a href="https://www.roblox.com" target="_blank" class="link-card">
+                        <div class="link-left">
+                            <img src="https://images.rbxcdn.com/3268e0d6967732d847184288005370ac.ico" alt="Roblox" class="platform-icon">
+                            <div class="link-info">
+                                <h3>Roblox</h3>
+                                <p>yanzxa4</p>
+                            </div>
                         </div>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
 
-                    <div class="link-item" onclick="alert('Discord Username: yanzaja114')" style="cursor: pointer;">
-                        <div class="link-info">
-                            <i class="fa-brands fa-discord"></i>
-                            <span>Discord (yanzaja114)</span>
+                    <!-- Discord -->
+                    <div class="link-card" onclick="alert('Discord Username: yanzaja114')" style="cursor: pointer;">
+                        <div class="link-left">
+                            <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord" class="platform-icon">
+                            <div class="link-info">
+                                <h3>Discord</h3>
+                                <p>yanzaja114</p>
+                            </div>
                         </div>
                         <i class="fa-solid fa-arrow-right"></i>
                     </div>
+
                 </div>
             </div>
+
         </div>
 
         <!-- Footer -->
@@ -377,6 +464,9 @@
             &copy; 2026 Yanz. All rights reserved.
         </footer>
     </div>
+
+    <!-- FontAwesome Icons CDN untuk panah -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
         // Web Audio API untuk Efek Suara Shiny saat klik tombol
@@ -387,9 +477,8 @@
                 const gainNode = audioCtx.createGain();
 
                 osc.type = 'sine';
-                // Efek nada naik (shiny chime)
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nada D5
-                osc.frequency.exponentialRampToValueAtTime(1318.51, audioCtx.currentTime + 0.3); // Nada E6
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1318.51, audioCtx.currentTime + 0.3);
 
                 gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
@@ -400,11 +489,11 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.3);
             } catch (e) {
-                console.log("Audio not supported or blocked");
+                console.log("Audio blocked or not supported");
             }
         }
 
-        // Efek Partikel Sederhana saat Tombol Diklik
+        // Efek Partikel
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
