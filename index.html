@@ -13,7 +13,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            cursor: none; /* Menggunakan Custom Cursor */
+            cursor: none;
         }
 
         body {
@@ -100,6 +100,32 @@
                 opacity: 0;
                 visibility: hidden;
             }
+        }
+
+        /* Popup Teks Megah "Mejeh Euyy" di Tengah */
+        #mejeh-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff007f, #7928ca, #ff007f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            text-shadow: 0 0 40px rgba(236, 72, 153, 0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        #mejeh-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
         /* Canvas Partikel Latar */
@@ -345,44 +371,48 @@
             flex-shrink: 0;
         }
 
-        /* Tech Stack & Quick Bio Card (No. 6) */
+        /* Mega Cards Container (2 Pilihan Baru yang Megah) */
         .skills-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding-top: 25px;
         }
 
         .skill-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 15px;
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.08), rgba(236, 72, 153, 0.08));
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            padding: 20px;
+            border-radius: 20px;
             text-align: center;
-            transition: transform 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .skill-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.25);
+            border-color: rgba(236, 72, 153, 0.5);
         }
 
         .skill-card i {
-            font-size: 1.5rem;
-            color: #c084fc;
-            margin-bottom: 8px;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
 
         .skill-card h4 {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .skill-card p {
-            font-size: 0.75rem;
-            color: #9ca3af;
+            font-size: 0.85rem;
+            color: #d1d5db;
         }
 
         /* Links Section (Grid Layout) */
@@ -476,6 +506,9 @@
                 flex-direction: column;
                 gap: 15px;
             }
+            #mejeh-popup {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
@@ -484,6 +517,9 @@
     <!-- Custom Cursor Elemen -->
     <div class="custom-cursor" id="cursor"></div>
     <div class="custom-cursor-dot" id="cursor-dot"></div>
+
+    <!-- Popup Teks Megah Mejeh Euyy -->
+    <div id="mejeh-popup">MEJEH EUYY! 🔥</div>
 
     <!-- Intro Overlay -->
     <div id="intro-overlay">
@@ -506,7 +542,7 @@
         <header>
             <div class="logo-text">Yanz.</div>
             <div class="nav-right">
-                <!-- Musik Lofi Toggle (No. 1) -->
+                <!-- Musik Lofi Toggle -->
                 <button class="music-btn" onclick="toggleMusic()" id="music-toggle-btn">
                     <i class="fa-solid fa-music"></i> <span id="music-text">Play Lofi</span>
                 </button>
@@ -525,8 +561,8 @@
                 <div class="hero-section">
                     <div class="hero-top">
                         <div class="hero-text">
-                            <!-- Tagline dengan Confetti Rahasia (No. 7) -->
-                            <div class="tagline-box" onclick="triggerConfetti(event)">"Mejeh euyy" 🔥 (Click me!)</div>
+                            <!-- Tagline dengan Confetti & Popup Mejeh Euyy (Cooldown 10 Detik) -->
+                            <div class="tagline-box" onclick="triggerMejehEffect(event)">"Mejeh euyy" 🔥</div>
                             <h1>Hello, I'm <span>Yanz</span></h1>
                             <p>Welcome to my official landing page. Explore all my social media accounts, game profiles, and online spaces right here in one place!</p>
                             <div class="status-badge">
@@ -537,22 +573,17 @@
                         <div class="hero-avatar">Y</div>
                     </div>
 
-                    <!-- Tech Stack & Quick Bio Card (No. 6) -->
+                    <!-- Mega Cards (Chill Lofi & Vibe Creator) -->
                     <div class="skills-container">
                         <div class="skill-card">
-                            <i class="fa-solid fa-gamepad"></i>
-                            <h4>Roblox Creator</h4>
-                            <p>Building worlds & scripting</p>
-                        </div>
-                        <div class="skill-card">
-                            <i class="fa-solid fa-code"></i>
-                            <h4>Developer Vibe</h4>
-                            <p>Luau & Web Enthusiast</p>
-                        </div>
-                        <div class="skill-card">
                             <i class="fa-solid fa-headphones-simple"></i>
-                            <h4>Chill Gamer</h4>
-                            <p>Always listening to Lofi</p>
+                            <h4>Chill & Lofi Vibes</h4>
+                            <p>Enjoying good music and relaxing gaming moments.</p>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-crown"></i>
+                            <h4>Zerry Syndicate Vibe</h4>
+                            <p>Creating awesome spaces, communities, and digital style.</p>
                         </div>
                     </div>
                 </div>
@@ -637,7 +668,7 @@
             cursorDot.style.top = e.clientY + 'px';
         });
 
-        // Efek Hover kursor ke semua elemen interaktif
+        // Efek Hover kursor ke elemen interaktif
         document.querySelectorAll('a, button, .link-card, .skill-card, .tagline-box').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.width = '35px';
@@ -651,7 +682,7 @@
             });
         });
 
-        // Web Audio API untuk Efek Musik Lofi (No. 1)
+        // Web Audio API untuk Musik Lofi
         let lofiInterval = null;
         let isPlayingLofi = false;
         let audioCtx = null;
@@ -662,9 +693,7 @@
             if (!isPlayingLofi) {
                 try {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    
-                    // Melodi santai ala lofi pakai synthesizer sederhana (Arpeggio lembut)
-                    const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23]; // C, E, G, C5, A, F
+                    const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23];
                     let index = 0;
 
                     lofiInterval = setInterval(() => {
@@ -700,18 +729,38 @@
             }
         }
 
-        // Efek Confetti Rahasia (No. 7)
-        function triggerConfetti(event) {
+        // Logika Mejeh Euyy Popup + Confetti dengan Cooldown 10 Detik
+        let canTriggerMejeh = true;
+
+        function triggerMejehEffect(event) {
+            if (!canTriggerMejeh) return; // Mencegah spam (cooldown aktif)
+            canTriggerMejeh = false;
+
             const rect = event.target.getBoundingClientRect();
             const x = (rect.left + rect.width / 2) / window.innerWidth;
             const y = (rect.top + rect.height / 2) / window.innerHeight;
 
+            // Ledakan Confetti
             confetti({
-                particleCount: 80,
-                spread: 70,
+                particleCount: 100,
+                spread: 80,
                 origin: { x: x, y: y },
-                colors: ['#c084fc', '#ec4899', '#f472b6', '#ffffff']
+                colors: ['#c084fc', '#ec4899', '#f472b6', '#ffffff', '#ff007f']
             });
+
+            // Munculkan teks megah di tengah layar
+            const popup = document.getElementById('mejeh-popup');
+            popup.classList.add('show');
+
+            // Hilangkan teks setelah 2 detik
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 2000);
+
+            // Reset cooldown setelah 10 detik
+            setTimeout(() => {
+                canTriggerMejeh = true;
+            }, 10000);
         }
 
         // Fungsi Copy Discord
