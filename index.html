@@ -17,7 +17,7 @@
         }
 
         body {
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+            background: linear-gradient(-45deg, #2e0854, #4a0e4e, #881337, #1e1b4b);
             background-size: 400% 400%;
             animation: gradientBG 12s ease infinite;
             color: #ffffff;
@@ -31,19 +31,19 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Intro Overlay */
+        /* Intro Overlay (Auto masuk tanpa klik) */
         #intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0b091a;
+            background: #11071f;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            animation: fadeOutIntro 0.8s ease 1.8s forwards;
         }
 
         .intro-content {
@@ -53,14 +53,14 @@
 
         .intro-content h1 {
             font-size: 3.5rem;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
+            background: linear-gradient(135deg, #c084fc, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
 
         .intro-content p {
-            color: #9ca3af;
+            color: #d1d5db;
             font-size: 0.95rem;
             letter-spacing: 2px;
         }
@@ -70,16 +70,36 @@
             100% { transform: scale(1.05); opacity: 1; }
         }
 
+        @keyframes fadeOutIntro {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* Canvas Partikel */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 998;
+        }
+
         /* Main Container */
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 40px 20px;
-            display: none; /* Ditampilkan setelah intro selesai */
+            display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             justify-content: space-between;
+            position: relative;
+            z-index: 2;
         }
 
         /* Navigation Header */
@@ -97,7 +117,7 @@
         nav button {
             background: transparent;
             border: none;
-            color: #9ca3af;
+            color: #d1d5db;
             font-size: 0.95rem;
             font-weight: 600;
             padding: 8px 20px;
@@ -107,9 +127,9 @@
         }
 
         nav button.active, nav button:hover {
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #9333ea, #ec4899);
             color: #ffffff;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
         }
 
         /* Pages */
@@ -146,13 +166,20 @@
             margin: 0 auto 20px;
         }
 
-        .avatar {
+        /* PP Huruf Y */
+        .avatar-letter {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #c084fc;
-            box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            background: linear-gradient(135deg, #9333ea, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            border: 3px solid #f472b6;
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.5);
         }
 
         .profile-card h2 {
@@ -162,7 +189,7 @@
         }
 
         .profile-card p {
-            color: #9ca3af;
+            color: #d1d5db;
             font-size: 0.95rem;
             margin-bottom: 25px;
         }
@@ -238,7 +265,7 @@
 
         .fa-tiktok { color: #fe2c55; }
         .fa-instagram { color: #e1306c; }
-        .fa-gamepad { color: #e53935; }
+        .fa-gamepad { color: #ef4444; }
         .fa-discord { color: #5865F2; }
 
         .link-item span {
@@ -260,28 +287,33 @@
         footer {
             margin-top: 40px;
             text-align: center;
-            color: #6b7280;
+            color: #9ca3af;
             font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Intro Overlay -->
+    <!-- Intro Overlay (Auto Masuk) -->
     <div id="intro-overlay">
         <div class="intro-content">
             <h1>YANZ</h1>
-            <p>CLICK TO ENTER</p>
+            <p>LOADING PROFILE...</p>
         </div>
     </div>
+
+    <!-- Canvas untuk Efek Partikel -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Audio Efek Shiny (Sintesis Suara via Web Audio API) -->
 
     <!-- Main Wrapper -->
     <div class="container" id="main-container">
         
         <!-- Navigation Menu -->
         <nav>
-            <button class="tab-btn active" onclick="switchPage('home')">Home</button>
-            <button class="tab-btn" onclick="switchPage('links')">Links</button>
+            <button class="tab-btn active" onclick="switchPage('home', event)">Home</button>
+            <button class="tab-btn" onclick="switchPage('links', event)">Links</button>
         </nav>
 
         <!-- Content Area -->
@@ -290,8 +322,8 @@
             <div id="home" class="page active">
                 <div class="profile-card">
                     <div class="avatar-container">
-                        <!-- Ganti link gambar di bawah jika ingin foto profil khusus -->
-                        <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=300&auto=format&fit=crop" alt="Yanz" class="avatar">
+                        <!-- PP Huruf Y -->
+                        <div class="avatar-letter">Y</div>
                     </div>
                     <h2>Yanz</h2>
                     <p>Welcome to my personal space. Check out my links and social accounts below!</p>
@@ -343,22 +375,85 @@
         <!-- Footer -->
         <footer>
             &copy; 2026 Yanz. All rights reserved.
-        </div>
+        </footer>
     </div>
 
     <script>
-        // Intro Click Trigger
-        const introOverlay = document.getElementById('intro-overlay');
-        const mainContainer = document.getElementById('main-container');
+        // Web Audio API untuk Efek Suara Shiny saat klik tombol
+        function playShinySound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
 
-        introOverlay.addEventListener('click', () => {
-            introOverlay.style.opacity = '0';
-            introOverlay.style.visibility = 'hidden';
-            mainContainer.style.display = 'flex';
-        });
+                osc.type = 'sine';
+                // Efek nada naik (shiny chime)
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nada D5
+                osc.frequency.exponentialRampToValueAtTime(1318.51, audioCtx.currentTime + 0.3); // Nada E6
 
-        // Tab Switching Logic
-        function switchPage(pageId) {
+                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } catch (e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
+
+        // Efek Partikel Sederhana saat Tombol Diklik
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 25; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    size: Math.random() * 5 + 2,
+                    speedX: (Math.random() - 0.5) * 8,
+                    speedY: (Math.random() - 0.5) * 8,
+                    color: ['#f472b6', '#c084fc', '#ffffff', '#e879f9'][Math.floor(Math.random() * 4)],
+                    life: 1
+                });
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.life -= 0.03;
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                if (p.life <= 0) particles.splice(index, 1);
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Tab Switching Logic dengan efek suara dan partikel
+        function switchPage(pageId, event) {
+            playShinySound();
+            
+            const rect = event.target.getBoundingClientRect();
+            createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
             const pages = document.querySelectorAll('.page');
             const buttons = document.querySelectorAll('.tab-btn');
 
@@ -366,8 +461,6 @@
             buttons.forEach(btn => btn.classList.remove('active'));
 
             document.getElementById(pageId).classList.add('active');
-            
-            // Activate corresponding button
             event.target.classList.add('active');
         }
     </script>
