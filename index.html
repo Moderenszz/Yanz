@@ -13,6 +13,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            cursor: none; /* Menggunakan Custom Cursor */
         }
 
         body {
@@ -28,6 +29,31 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* Custom Particle Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f472b6;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 100000;
+            box-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+        }
+
+        .custom-cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background-color: #c084fc;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100001;
         }
 
         /* Intro Overlay */
@@ -76,7 +102,7 @@
             }
         }
 
-        /* Canvas Partikel */
+        /* Canvas Partikel Latar */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -85,6 +111,27 @@
             height: 100%;
             pointer-events: none;
             z-index: 998;
+        }
+
+        /* Toast Notifikasi Copy */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #9333ea, #ec4899);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10000;
+            font-size: 0.9rem;
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
         }
 
         /* Full Layout Wrapper */
@@ -117,6 +164,33 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Tombol Musik Lofi */
+        .music-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f472b6;
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+
         nav {
             display: flex;
             gap: 12px;
@@ -135,7 +209,6 @@
             font-weight: 600;
             padding: 8px 22px;
             border-radius: 30px;
-            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -145,10 +218,10 @@
             box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
         }
 
-        /* Main Content Container (Full Width Optimized) */
+        /* Main Content Container */
         .main-content {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             flex-grow: 1;
             display: flex;
             align-items: center;
@@ -175,23 +248,25 @@
         /* Home Section */
         .hero-section {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 25px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
             border-radius: 30px;
-            padding: 50px;
+            padding: 40px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            gap: 40px;
         }
 
-        .hero-text {
-            flex: 1;
+        .hero-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
         }
 
         .hero-text h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 10px;
             line-height: 1.2;
@@ -205,8 +280,8 @@
 
         .hero-text p {
             color: #d1d5db;
-            font-size: 1.05rem;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
             line-height: 1.6;
         }
 
@@ -219,7 +294,12 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.95rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .tagline-box:hover {
+            transform: scale(1.05);
         }
 
         .status-badge {
@@ -249,21 +329,60 @@
             50% { opacity: 0.3; }
         }
 
-        /* Avatar Huruf Y Besar di Home */
         .hero-avatar {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background: linear-gradient(135deg, #9333ea, #ec4899);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 6rem;
+            font-size: 5rem;
             font-weight: 700;
             color: #ffffff;
             border: 4px solid #f472b6;
             box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
             flex-shrink: 0;
+        }
+
+        /* Tech Stack & Quick Bio Card (No. 6) */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 25px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-3px);
+        }
+
+        .skill-card i {
+            font-size: 1.5rem;
+            color: #c084fc;
+            margin-bottom: 8px;
+        }
+
+        .skill-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .skill-card p {
+            font-size: 0.75rem;
+            color: #9ca3af;
         }
 
         /* Links Section (Grid Layout) */
@@ -301,7 +420,6 @@
             gap: 18px;
         }
 
-        /* Icon Gambar Asli (Logo PNG) */
         .platform-icon {
             width: 42px;
             height: 42px;
@@ -320,12 +438,12 @@
             color: #9ca3af;
         }
 
-        .link-card i {
+        .link-card i.arrow-icon {
             color: #9ca3af;
             transition: transform 0.3s ease;
         }
 
-        .link-card:hover i {
+        .link-card:hover i.arrow-icon {
             transform: translateX(5px);
             color: #ffffff;
         }
@@ -344,21 +462,28 @@
             .wrapper {
                 padding: 20px;
             }
-            .hero-section {
+            .hero-top {
                 flex-direction: column-reverse;
                 text-align: center;
-                padding: 30px 20px;
             }
             .hero-text h1 {
                 font-size: 2.2rem;
             }
-            .links-grid {
+            .links-grid, .skills-container {
                 grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- Custom Cursor Elemen -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
 
     <!-- Intro Overlay -->
     <div id="intro-overlay">
@@ -371,16 +496,25 @@
     <!-- Canvas Partikel -->
     <canvas id="particle-canvas"></canvas>
 
+    <!-- Toast Notifikasi -->
+    <div id="toast">Discord Tag Disalin! 📋</div>
+
     <!-- Main Wrapper -->
     <div class="wrapper">
         
         <!-- Header -->
         <header>
             <div class="logo-text">Yanz.</div>
-            <nav>
-                <button class="tab-btn active" onclick="switchPage('home', event)">Home</button>
-                <button class="tab-btn" onclick="switchPage('links', event)">Links</button>
-            </nav>
+            <div class="nav-right">
+                <!-- Musik Lofi Toggle (No. 1) -->
+                <button class="music-btn" onclick="toggleMusic()" id="music-toggle-btn">
+                    <i class="fa-solid fa-music"></i> <span id="music-text">Play Lofi</span>
+                </button>
+                <nav>
+                    <button class="tab-btn active" onclick="switchPage('home', event)">Home</button>
+                    <button class="tab-btn" onclick="switchPage('links', event)">Links</button>
+                </nav>
+            </div>
         </header>
 
         <!-- Main Content Area -->
@@ -389,16 +523,38 @@
             <!-- Home Page -->
             <div id="home" class="page active">
                 <div class="hero-section">
-                    <div class="hero-text">
-                        <div class="tagline-box">"Mejeh euyy" 🔥</div>
-                        <h1>Hello, I'm <span>Yanz</span></h1>
-                        <p>Welcome to my official landing page. Explore all my social media accounts, game profiles, and online spaces right here in one place!</p>
-                        <div class="status-badge">
-                            <div class="status-dot"></div>
-                            Available & Ready
+                    <div class="hero-top">
+                        <div class="hero-text">
+                            <!-- Tagline dengan Confetti Rahasia (No. 7) -->
+                            <div class="tagline-box" onclick="triggerConfetti(event)">"Mejeh euyy" 🔥 (Click me!)</div>
+                            <h1>Hello, I'm <span>Yanz</span></h1>
+                            <p>Welcome to my official landing page. Explore all my social media accounts, game profiles, and online spaces right here in one place!</p>
+                            <div class="status-badge">
+                                <div class="status-dot"></div>
+                                Available & Ready
+                            </div>
+                        </div>
+                        <div class="hero-avatar">Y</div>
+                    </div>
+
+                    <!-- Tech Stack & Quick Bio Card (No. 6) -->
+                    <div class="skills-container">
+                        <div class="skill-card">
+                            <i class="fa-solid fa-gamepad"></i>
+                            <h4>Roblox Creator</h4>
+                            <p>Building worlds & scripting</p>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-code"></i>
+                            <h4>Developer Vibe</h4>
+                            <p>Luau & Web Enthusiast</p>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fa-solid fa-headphones-simple"></i>
+                            <h4>Chill Gamer</h4>
+                            <p>Always listening to Lofi</p>
                         </div>
                     </div>
-                    <div class="hero-avatar">Y</div>
                 </div>
             </div>
 
@@ -415,7 +571,7 @@
                                 <p>@yanzaja114</p>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
                     </a>
 
                     <!-- Instagram -->
@@ -427,7 +583,7 @@
                                 <p>@yanzaja114</p>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
                     </a>
 
                     <!-- Roblox -->
@@ -439,19 +595,19 @@
                                 <p>yanzxa4</p>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right arrow-icon"></i>
                     </a>
 
-                    <!-- Discord -->
-                    <div class="link-card" onclick="alert('Discord Username: yanzaja114')" style="cursor: pointer;">
+                    <!-- Discord (Copy Feature) -->
+                    <div class="link-card" onclick="copyDiscord(event)" style="cursor: pointer;">
                         <div class="link-left">
                             <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord" class="platform-icon">
                             <div class="link-info">
                                 <h3>Discord</h3>
-                                <p>yanzaja114</p>
+                                <p>yanzaja114 (Click to Copy)</p>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-right"></i>
+                        <i class="fa-solid fa-copy arrow-icon"></i>
                     </div>
 
                 </div>
@@ -465,35 +621,114 @@
         </footer>
     </div>
 
-    <!-- FontAwesome Icons CDN untuk panah -->
+    <!-- FontAwesome Icons CDN & Confetti Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // Web Audio API untuk Efek Suara Shiny saat klik tombol
-        function playShinySound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
+        // Custom Cursor Movement
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
 
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1318.51, audioCtx.currentTime + 0.3);
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
 
-                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        // Efek Hover kursor ke semua elemen interaktif
+        document.querySelectorAll('a, button, .link-card, .skill-card, .tagline-box').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '35px';
+                cursor.style.height = '35px';
+                cursor.style.backgroundColor = 'rgba(236, 72, 153, 0.15)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                cursor.style.backgroundColor = 'transparent';
+            });
+        });
 
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
+        // Web Audio API untuk Efek Musik Lofi (No. 1)
+        let lofiInterval = null;
+        let isPlayingLofi = false;
+        let audioCtx = null;
 
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            } catch (e) {
-                console.log("Audio blocked or not supported");
+        function toggleMusic() {
+            const btnText = document.getElementById('music-text');
+            
+            if (!isPlayingLofi) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    // Melodi santai ala lofi pakai synthesizer sederhana (Arpeggio lembut)
+                    const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23]; // C, E, G, C5, A, F
+                    let index = 0;
+
+                    lofiInterval = setInterval(() => {
+                        if (!audioCtx) return;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(notes[index], audioCtx.currentTime);
+                        
+                        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+
+                        osc.start();
+                        osc.stop(audioCtx.currentTime + 1.2);
+
+                        index = (index + 1) % notes.length;
+                    }, 600);
+
+                    isPlayingLofi = true;
+                    btnText.innerText = "Stop Lofi";
+                } catch (e) {
+                    alert("Audio tidak diizinkan browser.");
+                }
+            } else {
+                if (lofiInterval) clearInterval(lofiInterval);
+                if (audioCtx) audioCtx.close();
+                isPlayingLofi = false;
+                btnText.innerText = "Play Lofi";
             }
         }
 
-        // Efek Partikel
+        // Efek Confetti Rahasia (No. 7)
+        function triggerConfetti(event) {
+            const rect = event.target.getBoundingClientRect();
+            const x = (rect.left + rect.width / 2) / window.innerWidth;
+            const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+            confetti({
+                particleCount: 80,
+                spread: 70,
+                origin: { x: x, y: y },
+                colors: ['#c084fc', '#ec4899', '#f472b6', '#ffffff']
+            });
+        }
+
+        // Fungsi Copy Discord
+        function copyDiscord(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+            navigator.clipboard.writeText("yanzaja114");
+            
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2000);
+        }
+
+        // Efek Partikel Latar Belakang
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -506,14 +741,14 @@
         resizeCanvas();
 
         function createParticles(x, y) {
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 20; i++) {
                 particles.push({
                     x: x,
                     y: y,
-                    size: Math.random() * 5 + 2,
-                    speedX: (Math.random() - 0.5) * 8,
-                    speedY: (Math.random() - 0.5) * 8,
-                    color: ['#f472b6', '#c084fc', '#ffffff', '#e879f9'][Math.floor(Math.random() * 4)],
+                    size: Math.random() * 4 + 2,
+                    speedX: (Math.random() - 0.5) * 6,
+                    speedY: (Math.random() - 0.5) * 6,
+                    color: ['#f472b6', '#c084fc', '#ffffff'][Math.floor(Math.random() * 3)],
                     life: 1
                 });
             }
@@ -536,10 +771,8 @@
         }
         animateParticles();
 
-        // Tab Switching Logic dengan efek suara dan partikel
+        // Tab Switching Logic
         function switchPage(pageId, event) {
-            playShinySound();
-            
             const rect = event.target.getBoundingClientRect();
             createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
